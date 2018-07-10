@@ -43,8 +43,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        <script src="scripts.js"></script>
-        <link href="styles.css" rel="stylesheet">
+        <script src="js/scripts.js"></script>
+        <link href="css/styles.css" rel="stylesheet">
     </head>
     <body>
         <nav class="navbar  navbar-inverse  navbar-fixed-top">
@@ -81,46 +81,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <br/>
         <div class="container-back">
             <div class="col-xs-12 col-sm-2 col-md-1 profile-sidebar top40" >
-                <button type="button" class="btn-primary btn-lg btn-block" id="create-btn" onclick="window.location.href='createSurvey.php'">Create Survey</button><br />
+                <button type="button" class="btn-primary btn-lg btn-block" id="save-btn">Save</button><br />
+                <button type="button" class="btn-primary btn-lg btn-block" id="clear-btn">Clear</button><br />
+                <button type="button" class="btn-primary btn-lg btn-block" id="cancel-btn">Cancel</button><br />
             </div>
-            
+
             <div id="profile-content" class="col-xs-12 col-sm-8 col-md-9 top40">
-                <?php
-                if (isset($_GET['username'])) {
-                    if ($_GET['username'] == $_SESSION['login_user']) {
-                        $username = mysqli_real_escape_string($db, $_SESSION['login_user']);
-                    } else {
-                        $username = $_GET['username'];
-                    }
-                } else {
-                    $username = mysqli_real_escape_string($db, $_SESSION['login_user']);
-                }
-                $sql = "SELECT content,time FROM contents WHERE user = '$username' ORDER BY sequence DESC";
-                $result = mysqli_query($db, $sql);
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">Survey Name</span>
+                    <input type="text" class="form-control" aria-describedby="basic-addon1">
+                </div>
+                <br/>
+                <div class="form-group">
+                    <label for="exampleTextarea">Description</label>
+                    <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                </div>
 
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo '<div class="content-element col-xs-12 col-sm-12 col-md-12">
-                    <button type="button" class="close" onclick="deleteItem();">&times;</button>';
-                    echo '<button data-html="true"  style="float: right; margin-right: 10px;" type="button" class="btn btn-xs btn-warning" data-container="body" data-toggle="popover" data-placement="bottom" data-content="';
-                    echo "<form id='settings1'>Background Color:<input type='color' id='back-color' name='back-color' value='#ff0000'><br/>Font Color:<input type='color' id='font-color' name='font-color' value='#ff0000'><br/>Size:<input type='text' class='form-control' id='usr'><input type='submit'></form>";
-                    echo '">
-                        CSS
-                    </button>';
-                    echo $row['content'];
-                    echo "</div>";
-                }
-                ?>
             </div>
-            <div class="content-element col-xs-12 col-sm-8 col-md-2 top40">
-                <?php
-                $sql = "SELECT username,name,surname FROM users";
-                $result = mysqli_query($db, $sql);
-                echo '<b>User List:</b> <br />';
-                while ($row = mysqli_fetch_assoc($result)) {
-
-                    echo '<a href="home.php?username=' . $row['username'] . '">' . $row['name'] . ' ' . $row['surname'] . '</a> <br />';
-                }
-                ?>               
+            <div class="content-element col-xs-12 col-sm-8 col-md-2 top40">               
+                <button type="button" class="btn-primary btn-lg btn-block" id="text-btn">Text Box</button><br />
+                <button type="button" class="btn-primary btn-lg btn-block" id="number-btn">Number Box</button><br />
+                <button type="button" class="btn-primary btn-lg btn-block" id="radio-btn">Multiple Radio</button><br />
+                <button type="button" class="btn-primary btn-lg btn-block" id="combo-btn">Multple CBox</button><br />
+                <button type="button" class="btn-primary btn-lg btn-block" id="matrix-btn">Matrix</button><br />
             </div>
         </div>      
     </body>

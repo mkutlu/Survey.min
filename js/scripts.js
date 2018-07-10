@@ -1,4 +1,3 @@
-
 $(function () {
     $('[data-toggle="popover"]').popover();
     function register(e) {
@@ -45,5 +44,31 @@ $(function () {
         $.get("home.php");
         return false;
     });
+    $('#save-btn').on('click', function (e) {
+        if (confirm("Are you sure you want to save survey?")) {
+            saveSurvey();
+        } else {
+            //Do nothing  
+        }
+    });
+    $('#cancel-btn').on('click', function (e) {
+        if (confirm("Are you sure you want to and redirect to homepage?")) {
+            window.location.href='home.php';
+        } else {
+            //Do nothing  
+        }
+    });
+    $('#clear-btn').on('click', function (e) {
+        if (confirm("Are you sure you want to clear the entire survey context?")) {
+            clearSurvey();
+        } else {
+            //Do nothing  
+        }
+    });
+    function clearSurvey() {
 
+    }
+    function saveSurvey() {
+        
+    }
 });
