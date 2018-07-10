@@ -96,7 +96,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="exampleTextarea">Description</label>
                     <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
                 </div>
-
+                <div id="question-area" style="box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22); background-color: honeydew">
+                    
+                </div>
+                    <!--<div style="box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22); background-color: honeydew">
+                    <div class="question-text" style="margin: 20px;">
+                        <label for="exampleTextarea">Question Text</label>
+                        <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                    </div>
+                    <button type="button" class="btn-primary btn-md btn-right" style="float: right;" id="txt-option-btn">Add Option</button><br />
+                </div>-->
             </div>
             <div class="content-element col-xs-12 col-sm-8 col-md-2 top40">               
                 <button type="button" class="btn-primary btn-lg btn-block" id="text-btn">Text Box</button><br />

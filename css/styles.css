@@ -15,8 +15,9 @@ and open the template in the editor.
 */
 
 /* 0.Main styles */
-
-
+.card-4 {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
 .container-back {
     background: #f0ad4e;
 }

@@ -1,4 +1,6 @@
 $(function () {
+    var question = 0;
+    var option = 0;
     $('[data-toggle="popover"]').popover();
     function register(e) {
         e.preventDefault();
@@ -53,7 +55,7 @@ $(function () {
     });
     $('#cancel-btn').on('click', function (e) {
         if (confirm("Are you sure you want to and redirect to homepage?")) {
-            window.location.href='home.php';
+            window.location.href = 'home.php';
         } else {
             //Do nothing  
         }
@@ -65,10 +67,45 @@ $(function () {
             //Do nothing  
         }
     });
+    $('#text-btn').on('click', function (e) {
+        question = question + 1;
+        option = 0;
+        idstring="question"+question+"";
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: 'createSurvey.php',
+            data: $(this).serialize(),
+            success: function () {
+                $current_content = $('#question-area').html();
+                $('#question-area').empty();
+                $('#question-area').append('<div class="question-text" style="margin: 20px;"><label for="exampleTextarea">'+question+') Question Text</label><textarea class="form-control" id="'+idstring+'" rows="3"></textarea></div>');
+                $('#question-area').append($current_content);
+            }
+        });
+
+    });
+    $('#number-btn').on('click', function (e) {
+        question = question + 1;
+        option = 0;
+    });
+    $('#radio-btn').on('click', function (e) {
+        question = question + 1;
+        option = 0;
+    });
+    $('#combo-btn').on('click', function (e) {
+        question = question + 1;
+        option = 0;
+    });
+    $('#matrix-btn').on('click', function (e) {
+        question = question + 1;
+        option = 0;
+    });
+
     function clearSurvey() {
 
     }
     function saveSurvey() {
-        
+
     }
 });
