@@ -1,0 +1,73 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jun 20, 2018, 2:14:17 PM
+    Author     : MesutKutlu
+*/
+/* INDEX
+0.Main styles
+1.Login Page
+2.Registration Page
+3.Profile
+*/
+
+/* 0.Main styles */
+.container-back {
+    background: #f0ad4e;
+}
+body {
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+}
+label {
+    font-weight:bold;
+    width:100px;
+    font-size:14px;
+}
+table,
+tr,
+td {
+    border: 1px solid black;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+tr {
+    height: 20px;
+}
+
+td {
+    width: 20px;
+}
+/* 3.Profile */
+.profile-content{
+   
+}
+
+.profile-sidebar{
+
+}
+.top5 { margin-top:5px; }
+.top7 { margin-top:7px; }
+.top10 { margin-top:10px; }
+.top15 { margin-top:15px; }
+.top17 { margin-top:17px; }
+.top30 { margin-top:30px; }
+.top40 { margin-top:40px; }
+
+.box {
+    border:#666666 solid 1px;
+}
+
+.content-element {
+    background-color: gainsboro;
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px #888888;
+}
