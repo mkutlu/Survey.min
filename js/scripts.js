@@ -129,7 +129,6 @@ $(function () {
                 type: 'POST',
                 data: {htmlContent : content,surveyName : surveyName, surveyDesc : surveyDesc },
                 complete: function (response) {
-                    window.location.replace("/login.php");
                     alert('Survey succefully saved!');
                 }
             });

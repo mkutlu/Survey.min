@@ -6,38 +6,10 @@ and open the template in the editor.
 -->
 <?php
 include('session.php');
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = mysqli_real_escape_string($db, $_SESSION['login_user']);
-    if (isset($_POST['parea'])) {
-        $content = "<p>" . mysqli_real_escape_string($db, $_POST['parea']) . "</p>";
-    }
-    date_default_timezone_set('Europe/Istanbul');
-    $date = date('d.m.Y H:i:s');
-
-    $sql = "SELECT max(sequence) as max_id FROM contents WHERE user = '" . $username . "'";
-    $result = mysqli_query($db, $sql);
-    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-    $count = $row['max_id'];
-
-    //$count = mysqli_num_rows($result);
-    $count = $count + 1;
-
-    $sql = "INSERT INTO contents (user, sequence, content, time) VALUES ('" . $username . "', '" . $count . "', '" . $content . "','" . $date . "')";
-
-    function alert($msg) {
-        echo "<script type='text/javascript'>alert('$msg');</script>";
-    }
-
-    alert($sql);
-    $result = mysqli_query($db, $sql);
-    if ($result === TRUE) {
-        
-    }
-}
 //New survey creation
 if (isset($_POST['htmlContent'])) {
-    include('./pharse/pharse.php');
-    $html =  $_POST['htmlContent'];
+    include('./simple_html_dom.php');
+    $html = str_get_html($_POST['htmlContent']);
     
     $surveyName = $_POST['surveyName'];
     $surveyDesc = $_POST['surveyDesc'];
@@ -56,19 +28,17 @@ if (isset($_POST['htmlContent'])) {
     $username = mysqli_real_escape_string($db, $_SESSION['login_user']);
     
     $sql = "INSERT INTO surveys (surveyid, surveyname, surveydesc, surveydate, surveyversion, username)"
-            . " VALUES ('" . $surveyid . "', '" . $surveyName . "', '" . $surveyDesc . "','" . $date . "', '" . $surveyVersion . "',, '" . $username . "')";
-
-    foreach ($html('li') as $element){
-        $question = $element('textarea')->getPlainText();
-        $sequence = $element('input')->value;
-        $sql = "INSERT INTO questions (surveyid, sequence, question)"
-            . " VALUES ('" . $surveyid . "', '" . $sequence . "', '" . $question . "')";
-        $result = mysqli_query($db, $sql);
-       
+            . " VALUES ('" . $surveyid . "', '" . $surveyName . "', '" . $surveyDesc . "','" . $date . "', '" . $surveyVersion . "','" . $username . "')";
+    $result = mysqli_query($db, $sql);
+    
+    foreach ($html->find('li') as $element){
+        $html2 = str_get_html($element);
+        $question = $html2->find('textarea');
+        $sequence = $html2->find('input');
+        $sql2 = "INSERT INTO questions (surveyid, sequence, question)"
+            . " VALUES ('" . $surveyid . "', '" . $sequence[0]->value . "', '" . $question[0]->plaintext . "')";
+        $result = mysqli_query($db, $sql2);
     }
-    
-    
-    
 }
 ?>
 <html>
