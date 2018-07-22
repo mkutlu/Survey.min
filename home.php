@@ -34,6 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
     }
 }
+    
 ?>
 <html>
     <head>
@@ -64,8 +65,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <ul class="nav navbar-nav navbar-right">
                         <li class=""><a href="#">
                                 <?php
-                                if (isset($_GET['username'])) {
-                                    $user_check = $_GET['username'];
+                                if (isset($_SESSION['login_user'])) {
+                                    $username = mysqli_real_escape_string($db, $_SESSION['login_user']);
                                     $ses_sql = mysqli_query($db, "select name,surname from users where username = '$user_check' ");
                                     $row = mysqli_fetch_array($ses_sql, MYSQLI_ASSOC);
                                     $login_session = $row['name'] . " " . $row['surname'];
@@ -80,32 +81,68 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </nav>
         <br/>
         <div class="container-back">
-            <div class="col-xs-12 col-sm-2 col-md-1 profile-sidebar top40" >
+            <div class="col-xs-12 col-md-1 profile-sidebar top40" >
                 <button type="button" class="btn-primary btn-lg btn-block" id="create-btn" onclick="window.location.href = 'createSurvey.php'">Create Survey</button><br />
             </div>
+            <div class="col-xs-12 col-md-9 profile-sidebar top40" >
+                <div class="panel with-nav-tabs panel-default">
+                    <div class="panel-heading">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#tab1default" data-toggle="tab">Created Surveys</a></li>
+                            <li><a href="#tab2default" data-toggle="tab">Public Surveys</a></li>                          
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="tab1default">
+                                <?php
+                                echo '<table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Survey Name</th>
+                                                    <th scope="col">Description</th>
+                                                    <th scope="col">Creation Date</th>
+                                                    <th scope="col">Version</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>';
+                                $sql = "SELECT surveyname,surveydesc,surveydate,surveyversion FROM surveys where  username='".$_SESSION['login_user']."'";
+                                $result = mysqli_query($db, $sql);
+                                while ($row = mysqli_fetch_assoc($result)) {
 
-            <div id="profile-content" class="col-xs-12 col-sm-8 col-md-9 top40">
-                <?php
-                echo '<table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col">Survey Name</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Creation Date</th>
-                                <th scope="col">Version</th>
-                            </tr>
-                        </thead>
-                        <tbody>';
-                $sql = "SELECT surveyname,surveydesc,surveydate,surveyversion FROM surveys where  username=".$_SESSION['login_user']."";
-                $result = mysqli_query($db, $sql);
-                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo '<tr><td>' . $row['surveyname'] . '</td><td>' . $row['surveydesc'] . '</td><td> ' . $row['surveydate'] . '</td><td>' . $row['surveyversion'] . '</td></tr>';
+                                }
+                                echo '</tbody></table>'
+                                ?> 
+                            </div>
+                            <div class="tab-pane fade" id="tab2default">
+                                <div class="menuitem">
+                                    <?php
+                                    echo '<table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Survey Name</th>
+                                                    <th scope="col">Description</th>
+                                                    <th scope="col">Creation Date</th>
+                                                    <th scope="col">Version</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>';
+                                    $sql = "SELECT surveyname,surveydesc,surveydate,surveyversion FROM surveys";
+                                    $result = mysqli_query($db, $sql);
+                                    while ($row = mysqli_fetch_assoc($result)) {
 
-                    echo '<tr><td>' . $row['surveyname'] . '</td><td>' . $row['surveydesc'] . '</td><td> ' . $row['surveydate'] . '</td><td>'. $row['surveyversion'] . '</td></tr>';
-                }
-                echo '</tbody></table>'
-                ?>     
+                                        echo '<tr><td>' . $row['surveyname'] . '</td><td>' . $row['surveydesc'] . '</td><td> ' . $row['surveydate'] . '</td><td>' . $row['surveyversion'] . '</td></tr>';
+                                    }
+                                    echo '</tbody></table>'
+                                    ?> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="content-element col-xs-12 col-sm-8 col-md-2 top40">
+            <div class="content-element col-xs-12 col-md-2 top40">
                 <?php
                 $sql = "SELECT username,name,surname FROM users";
                 $result = mysqli_query($db, $sql);
